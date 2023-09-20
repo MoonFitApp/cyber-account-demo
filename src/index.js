@@ -140,7 +140,7 @@ const main = async () => {
         "signature": signature,
     }
     console.log(userOperation)
-    cyberAccount.paymaster.jwt = await cyberAccount.paymaster.generateJwt()
+    cyberAccount.paymaster.jwt = await cyberAccount.paymaster.generateJwt(cyberAccountAddress)
     console.log(cyberAccount.paymaster.jwt)
     console.log("thaovt", cyberAccount);
 
