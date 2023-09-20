@@ -1,5 +1,5 @@
+require('dotenv').config()
 const {CyberAccount, CyberBundler, CyberPaymaster} = require("@cyberlab/cyber-account");
-const ethers = require("ethers")
 const {privateKeyToAccount} = require("viem/accounts")
 const {createWalletClient, http, parseUnits} = require("viem")
 const {baseGoerli} = require("viem/chains")
@@ -7,7 +7,7 @@ const moment = require('moment')
 
 const jwt = require('jsonwebtoken');
 
-const appId = 'xxx'
+const appId = process.env.APP_ID
 
 const providerRPC = {
     name: 'Base Goerli',
@@ -15,18 +15,14 @@ const providerRPC = {
     chainId: 84531,
     tokenName: 'ETH',
 }
-const provider = new ethers.providers.JsonRpcProvider(providerRPC.rpc, {
-    chainId: providerRPC.chainId,
-    name: providerRPC.name,
-})
 
 /**
  * Decrypt JWE Web Token
  *
- * @param input
  * @returns {Promise<object>}
+ * @param sender
  */
-const decryptJWEToken = async (sender) => {
+const getToken = async (sender) => {
 
     // This is the Private Key kept on the server.  This was
     // the key created along with the Public Key after login.
@@ -36,7 +32,7 @@ const decryptJWEToken = async (sender) => {
     // normally it would be held in a database to
     // refer during the API call.
 
-    const privateKey = `xxx`;
+    const privateKey = process.env.PRIVATE_KEY_AUTH;
 
     try {
         const iat = moment()
@@ -62,8 +58,8 @@ const decryptJWEToken = async (sender) => {
 }
 
 
-const privateKey = 'ccc'
-const ownerAddress = 'xxx'
+const privateKey = process.env.PRIVATE_WALLET_TETS
+const ownerAddress = process.env.OWNER_ADDRESS
 
 const main = async () => {
 
@@ -99,7 +95,7 @@ const main = async () => {
     const cyberPaymaster = new CyberPaymaster({
         rpcUrl: "https://api.stg.cyberconnect.dev/cyberaccount/paymaster/v1/rpc",
         appId,
-        generateJwt: (cyberAccountAddress) => decryptJWEToken(cyberAccountAddress),
+        generateJwt: (cyberAccountAddress) => getToken(cyberAccountAddress),
     });
 
 
@@ -118,7 +114,7 @@ const main = async () => {
 
     });
     console.log("thaovt", cyberAccount);
-    const cyberAccountAddress = "0x70b7B15188bb77aAaB4E966FbeAc0A0932E11bcE"
+    const cyberAccountAddress = cyberAccount.address
 
     const transactionData = {
         to: cyberAccountAddress,
@@ -144,14 +140,21 @@ const main = async () => {
         "signature": signature,
     }
     console.log(userOperation)
+    cyberAccount.paymaster.jwt = await cyberAccount.paymaster.generateJwt()
+    console.log(cyberAccount.paymaster.jwt)
+    console.log("thaovt", cyberAccount);
 
 
     // const estGas = await cyberBundler.estimateUserOperationGas(userOperation, ownerAddress, providerRPC.chainId)
     // const b = await cyberBundler.sendUserOperation(userOperation, ownerAddress, providerRPC.chainId)
-    const c = await cyberAccount.sendTransaction(transactionData, {disablePaymaster: true});
+    const c = await cyberAccount.sendTransaction(transactionData, {disablePaymaster: false});
 
     console.log(c)
 
 }
 
-main()
+
+setImmediate(async () => {
+    await main()
+    process.exit()
+})
