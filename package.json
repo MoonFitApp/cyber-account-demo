@@ -1,0 +1,9 @@
+{
+  "name": "cyber-account",
+  "version": "1.0.0",
+  "description": "This is a demo",
+  "main": "index.js",
+  "repository": "https://github.com/vuthaouet/cyber-account.git",
+  "author": "vuthaouet <vuthao.ak56ht@gmail.com>",
+  "license": "MIT"
+}
