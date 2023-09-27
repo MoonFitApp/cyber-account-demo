@@ -1,208 +1,5 @@
 [
     {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "components": [
-                    {
-                        "internalType": "string",
-                        "name": "typeReward",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "value",
-                        "type": "uint256"
-                    }
-                ],
-                "indexed": false,
-                "internalType": "struct MoonFitActivities.Reward[]",
-                "name": "rewards",
-                "type": "tuple[]"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "taskName",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "timeClaim",
-                "type": "uint256"
-            }
-        ],
-        "name": "DailyTask",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint8",
-                "name": "version",
-                "type": "uint8"
-            }
-        ],
-        "name": "Initialized",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "components": [
-                    {
-                        "internalType": "string",
-                        "name": "typeReward",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "value",
-                        "type": "uint256"
-                    }
-                ],
-                "indexed": false,
-                "internalType": "struct MoonFitActivities.Reward",
-                "name": "rewards",
-                "type": "tuple"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "timeSpin",
-                "type": "uint256"
-            }
-        ],
-        "name": "LuckyWheel",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "previousOwner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "distance",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "distanceUnit",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "MFR",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "durationInSec",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "kcalBurned",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "MoonBeast",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "activityType",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "startTime",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "endTime",
-                "type": "uint256"
-            }
-        ],
-        "name": "Running",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "allowedAddresses",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [
             {
                 "components": [
@@ -217,7 +14,7 @@
                         "type": "uint256"
                     }
                 ],
-                "internalType": "struct MoonFitActivities.Reward[]",
+                "internalType": "struct MoonFitAccivitiesWithoutApprove.Reward[]",
                 "name": "rewards",
                 "type": "tuple[]"
             },
@@ -299,16 +96,120 @@
     },
     {
         "inputs": [],
-        "name": "owner",
-        "outputs": [
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
             {
+                "indexed": false,
                 "internalType": "address",
-                "name": "",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "typeReward",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "indexed": false,
+                "internalType": "struct MoonFitAccivitiesWithoutApprove.Reward[]",
+                "name": "rewards",
+                "type": "tuple[]"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "taskName",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "timeClaim",
+                "type": "uint256"
+            }
+        ],
+        "name": "DailyTask",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "version",
+                "type": "uint8"
+            }
+        ],
+        "name": "Initialized",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "typeReward",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "indexed": false,
+                "internalType": "struct MoonFitAccivitiesWithoutApprove.Reward",
+                "name": "rewards",
+                "type": "tuple"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "timeSpin",
+                "type": "uint256"
+            }
+        ],
+        "name": "LuckyWheel",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
                 "type": "address"
             }
         ],
-        "stateMutability": "view",
-        "type": "function"
+        "name": "OwnershipTransferred",
+        "type": "event"
     },
     {
         "inputs": [],
@@ -318,47 +219,71 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "revokeAllApproved",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
+        "anonymous": false,
         "inputs": [
             {
+                "indexed": false,
                 "internalType": "address",
-                "name": "operator",
+                "name": "owner",
                 "type": "address"
             },
             {
-                "internalType": "bool",
-                "name": "isApproved",
-                "type": "bool"
-            }
-        ],
-        "name": "setApprovedOperator",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address[]",
-                "name": "operators",
-                "type": "address[]"
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "distance",
+                "type": "uint256"
             },
             {
-                "internalType": "bool",
-                "name": "isApproved",
-                "type": "bool"
+                "indexed": false,
+                "internalType": "string",
+                "name": "distanceUnit",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "MFR",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "durationInSec",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "kcalBurned",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "MoonBeast",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "activityType",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "startTime",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "endTime",
+                "type": "uint256"
             }
         ],
-        "name": "setApprovedOperators",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        "name": "Running",
+        "type": "event"
     },
     {
         "inputs": [
@@ -375,7 +300,7 @@
                         "type": "uint256"
                     }
                 ],
-                "internalType": "struct MoonFitActivities.Reward",
+                "internalType": "struct MoonFitAccivitiesWithoutApprove.Reward",
                 "name": "rewards",
                 "type": "tuple"
             },
@@ -401,6 +326,19 @@
         "name": "transferOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     }
 ]

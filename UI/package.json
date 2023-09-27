@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "@cyberlab/cyber-account": "^1.9.4",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "^5.0.1",
+    "viem": "^1.12.2"
+  },
+  "main": "/index.js",
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "react-scripts": "1.0.0"
+  },
+  "name": "ly4rzn",
+  "description": null,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

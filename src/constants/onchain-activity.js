@@ -7,6 +7,6 @@ const ONCHAIN_ACTIVITY = {
 }
 
 module.exports = {
-    moonfitActivitiesContractAddress: '0xE9845334e513Fdb76D45aEa129279597d6E6A8Ff',
+    moonfitActivitiesContractAddress: '0xAB65A6f6d5b290741E444CFd745687D4727Dc3b4',
     ONCHAIN_ACTIVITY,
 }
