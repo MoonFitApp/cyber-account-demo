@@ -1,15 +1,17 @@
+require('http-inspector/inject')
 require('dotenv').config()
 const {CyberAccount, CyberBundler, CyberPaymaster} = require("@cyberlab/cyber-account")
 const {privateKeyToAccount} = require("viem/accounts")
-const {createWalletClient, http, parseUnits} = require("viem")
+const {createWalletClient, http, parseUnits, encodeFunctionData, parseEther, createPublicClient} = require("viem")
 const {baseGoerli} = require("viem/chains")
-// const moment = require('moment')
 
 const jwt = require('jsonwebtoken')
 const fs = require("fs")
 const path = require("path")
 const {moonfitActivitiesContractAddress, ONCHAIN_ACTIVITY} = require("./constants/onchain-activity")
+const MoonFitActivities = require('./abis/MoonFitActivities.json')
 const {getDataTx} = require("./services/onChainActivity")
+const {TokenReceiverAbi} = require("./abis/TokenReceiverAbi");
 
 const appId = process.env.APP_ID
 
@@ -29,7 +31,6 @@ const providerRPC = {
 const getToken = async (sender) => {
     const assetPath = path.join(__dirname, '../key/privateKey.pem')
     const privateKeyAuth = fs.readFileSync(assetPath, 'utf8')
-    console.log(privateKeyAuth)
 
     try {
         // const iat = moment().utc()
@@ -38,9 +39,9 @@ const getToken = async (sender) => {
             // issuer name
             "iss": "MF",
             // issue at, timestamp in second
-            "iat": 1695280670,
+            "iat": 1695712877,
             // expire at, timestamp in second
-            "exp": 1695355123,
+            "exp": 1696058456,
             // app id from CyberConnect dev center
             "aid": appId,
             // CyberAccount address
@@ -70,6 +71,7 @@ const main = async () => {
     })
 
     const account = privateKeyToAccount(privateKey)
+    console.log(account)
 
     const walletClient = createWalletClient({
         account: ownerAddress,
@@ -87,9 +89,10 @@ const main = async () => {
         appId,
         generateJwt: (cyberAccountAddress) => getToken(cyberAccountAddress),
     })
+
     const cyberAccount = new CyberAccount({
         chain: {
-            id: 84531,
+            id: providerRPC.chainId,
             testnet: true,
         },
         owner: {
@@ -98,31 +101,112 @@ const main = async () => {
 
         },
         bundler: cyberBundler,
-        paymaster: cyberPaymaster,
+        paymaster: cyberPaymaster
 
     })
+    console.log(cyberAccount)
 
-    const cyberAccountAddress = cyberAccount.address
 
-    const dataTx = await getDataTx({
-        type: ONCHAIN_ACTIVITY.TYPE.LUCKY_WHEEL,
-        reward: {"typeReward": "MoonBoxSlot", "value": 1},
-        timeSpin: 1695284290
-    })
+    const encoded = encodeFunctionData({
+        abi: MoonFitActivities,
+        functionName: "spinLuckyWheel",
+        args: [
+            ["MoonBoxSlot", 1],
+            1695284290,
+        ],
+    });
+    console.log(encoded)
     const transactionData = {
-        from: cyberAccountAddress,
         to: moonfitActivitiesContractAddress,
-        value: 0,
-        data: dataTx.encodeABI(),
+        value: BigInt(0),
+        data: encoded,
     }
+    // const transactionData = {
+    //     to: '0xA80E67aC0D0A0D21fdF0503a52A223A96Eef5455',
+    //     value: parseUnits("0.0001", 18),
+    //     data: '0x',
+    // }
+    // const {balance} = await cyberAccount.paymaster.getUserCredit(cyberAccount.address, providerRPC.chainId)
+    //
+    // console.log(parseEther(balance))
+    //
+    // console.log(transactionData)
+    // const userOperationHash = await cyberAccount.sendTransaction(transactionData, {disablePaymaster: true})
+    //
+    // console.log("userOperationHash", userOperationHash)
 
-    const tx = await cyberAccount.sendTransaction(transactionData, {disablePaymaster: true});
-    console.log(tx)
+    const txHash = await cyberAccount.bundler.getUserOperationReceipt('0x72a61a69f9dc6193a271dc5605b368cd3a78029da4eeb3204b9dd9311db96ea5', providerRPC.chainId)
+    console.log("txHash", txHash)
 
+    // const {request} = await cyberAccount.publicClient.simulateContract({
+    //     account,
+    //     address: moonfitActivitiesContractAddress,
+    //     abi: MoonFitActivities,
+    //     functionName: "spinLuckyWheel",
+    //     args: [
+    //         ["MoonBoxSlot", 1],
+    //         1695284290,
+    //     ],
+    //     value: parseUnits("0", 18),
+    // })
+    // console.log("thaocvt", request)
+    // const tx2 = await walletClient.writeContract(request);
+    // console.log(tx2)
+
+
+    //Top-up transaction
+    // console.log(cyberAccount)
+    // console.log(cyberAccount.publicClient)
+    // const abi = {
+    //     "inputs": [
+    //         {
+    //             "internalType": "address",
+    //             "name": "to",
+    //             "type": "address"
+    //         }
+    //     ],
+    //     "name": "depositTo",
+    //     "outputs": [],
+    //     "stateMutability": "payable",
+    //     "type": "function"
+    // }
+    // console.log("22222")
+    // const {request} = await cyberAccount.publicClient.simulateContract({
+    //     account,
+    //     address: '0x52b90f8e69ac72fe0f46726eadda13835cbb01fa',
+    //     abi: [abi],
+    //     functionName: "depositTo",
+    //     args: [cyberAccount?.address],
+    //     value: parseUnits("0.01", 18),
+    // })
+    // console.log("thaocvt", request)
+    // const tx = await walletClient.writeContract(request);
+    // console.log(tx)
+
+
+    // call contract setApprovedOperator
+    // const client = createPublicClient({
+    //     chain: baseGoerli,
+    //     transport: http(providerRPC.rpc)
+    // })
+    //
+    // const {request} = await client.simulateContract({
+    //     address: '0xE9845334e513Fdb76D45aEa129279597d6E6A8Ff',
+    //     abi: MoonFitActivities,
+    //     functionName: "setApprovedOperator",
+    //     args: ['0x70b7B15188bb77aAaB4E966FbeAc0A0932E11bcE', true],
+    //     value: BigInt(0),
+    //     account,
+    // })
+    // console.log("thaocvt", request)
+    //
+    // const _tx = await walletClient.writeContract(request);
+    // console.log("thaocvt", _tx)
 }
 
 
 setImmediate(async () => {
+
     await main()
     process.exit()
 })
